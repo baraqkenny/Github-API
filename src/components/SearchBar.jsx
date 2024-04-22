@@ -19,12 +19,9 @@ function SearchBar({ filteredRepositories, setFilteredRepositories, userData, se
 //   setFilteredRepositories(filtered);
 // };
 
-  const handleSearchClick = (e)=>{
+  const handleSearchChange = (e)=>{
     e.preventDefault()
-    const filtered = userData.filter(repo =>
-    repo.name.toLowerCase().includes(searchRepo.toLowerCase())
-    );
-       setSearchRepo(filtered);
+    setFilteredRepositories(userData.filter( filt => filt.name.toLowerCase().includes(e.target.value)))
   }
 
     // const handleSearchClick = (e) =>{
@@ -37,15 +34,12 @@ function SearchBar({ filteredRepositories, setFilteredRepositories, userData, se
        <input 
        className='search' 
        type="text" 
-       value={searchRepo}
-       onChange={(e)=> setSearchRepo(e.target.value)}
+       onChange={handleSearchChange}
        placeholder='Search...'/>
 
-       <button onClick={handleSearchClick}  className='search__btn' type="button">Search</button>
-    
-       {/* {filteredRepositories.map(repo => (
-          <li key={repo.id}>{repo.name}</li>
-        ))} */}
+       <button className='search__btn' type="button">Search</button>
+     
+
     </section>
   )
 } 

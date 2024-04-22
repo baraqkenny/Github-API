@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GITHUB_API} from '../utils/data'
-import SingleRepo from './SingleRepo';
 import "./Home.css"
 import SearchBar from './SearchBar';
 import Pagination from './Pagination';
+import ErrorBoundary from './ErrorBoundary';
 
 function Home() {
 const [userData, setUserData] = useState([]);
 const [error, setError] = useState(null);
-const [filteredRepositories, setFilteredRepositories] = useState([]);
+const [filteredRepositories, setFilteredRepositories] = useState(userData);
 const [currentPage, setCurrentPage] = useState(1)
 const [postPerPage] = useState(10)
 
@@ -44,7 +44,7 @@ const paginate = (pageNumber)=> setCurrentPage(pageNumber)
        <SearchBar filteredRepositories={filteredRepositories} setFilteredRepositories={setFilteredRepositories}  userData={currentPost} setUserData={setUserData}/>
       </section>
       <main>
-      {error ? (<div>{error}</div>) : 
+      {error ? (<div>{<ErrorBoundary error={error}/>}</div>) : 
        currentPost.map((user) => (
         <section key={user.id} className='repo__container'>
           <Link to={`/single-repo/${user.id}`}>{user.name}</Link>
